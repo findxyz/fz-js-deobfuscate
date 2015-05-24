@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <!-- <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"> -->
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="js/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="js/bootstrap.min.js"></script>
+    <title>反混淆</title>
+    <style>
+        .tab-content > .tab-pane > textarea {
+            width: 100%;
+            margin: 5px 0px 5px 0px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#myTab a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show')
+            });
+            var deob = function () {
+                var button = $(this);
+                var container = button.closest("div.tab-pane");
+                // var code = container.find("textarea");
+                // var deobMethod = deobjMap[button.attr("data-deobtype")];
+
+                // code.val(deobMethod(code.val()));
+                this.disabled = true;
+                button.next().attr("disabled", false);
+            };
+
+            $("div.tab-content button").click(deob);
+
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+                <textarea class="form-control" rows="15"></textarea>
+                <button type="button" class="btn btn-primary btn-lg" data-deobtype="eval">反混淆1</button>
+                <button type="button" class="btn btn-primary btn-lg" disabled="disabled" data-deobtype="arrayde">反混淆2</button>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="profile">...</div>
+            <div role="tabpanel" class="tab-pane" id="messages">...</div>
+        </div>
+    </div>
+</body>
+</html>

